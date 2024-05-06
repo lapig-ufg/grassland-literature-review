@@ -1,0 +1,20 @@
+a {color:#fff;}
+.warper{
+    width:100%;
+    }
+
+    .warper .col-25{
+    display: inline-blcok;
+    float:left;
+    width:25%;
+    margin:2%;
+    vertical-align:top;
+    }
+    
+    .warper .col-60{
+    display: inline-block;
+    float:left;
+    width: 60%;
+    margin:2%;
+    vertical-align:top;
+    }

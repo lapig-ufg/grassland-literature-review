@@ -1,0 +1,22 @@
+<h2 mat-dialog-title><a [href]="data.doi" class='doiUrl' target="_blank"> <fa-icon [icon]="['fas', 'newspaper']"></fa-icon> </a> {{data.id}} | {{data.title}}</h2>
+<mat-dialog-content class="mat-typography">
+    <p>{{data.language}} | {{data.type_crossref}} | {{data.ismed_first? 'Medicine':'Pasture'}} Cluster:{{data.cluster}}</p>
+    <h3>Keywords: {{data.keywords }}</h3>
+    <div class="warper">
+        <div class="col-25">
+            <img [src]="data.image" width="100%"> 
+        </div>
+        <div class="col-60">
+            <h3>Abstract</h3>
+            <p>{{data.abstract}}</p>
+        </div>
+  </div>
+  
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Clouse</button>
+</mat-dialog-actions>
+
+
+
+

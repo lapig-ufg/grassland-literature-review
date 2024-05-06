@@ -1,0 +1,13 @@
+<div >
+    <div class="box" >
+        <button (click)="setCluster(false)" mat-fab color="accent" aria-label="Example icon button with a bookmark icon">
+            <mat-icon>skip_previous</mat-icon>
+          </button>
+        <img [src]="getImageUrl()">
+        <button (click)="setCluster(true)" mat-fab color="accent" aria-label="Example icon button with a bookmark icon">
+            <mat-icon>skip_next</mat-icon>
+          </button>
+    </div>
+    {{ cluster_id}}
+    <app-table [type_source]="type_source" [cluster]="cluster_id"></app-table>
+</div>

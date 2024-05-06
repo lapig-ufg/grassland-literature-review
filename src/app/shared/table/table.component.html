@@ -1,0 +1,56 @@
+<mat-form-field>
+    <mat-label>Filter</mat-label>
+    <input matInput  placeholder="Pasture" #search>
+    <button mat-raised-button color="primary" (click)="applyFilter(search.value)">Pesquisa</button>
+</mat-form-field>
+  
+  <div class="mat-elevation-z8">
+    {{loading}}
+    
+    <mat-progress-bar [hidden]="loading" mode="indeterminate"></mat-progress-bar>
+    
+    <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)">
+  
+      <!-- ID Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+        <td mat-cell *matCellDef="let row"> <button mat-button (click)="openDialog(row.id)">Open</button></td>
+      </ng-container>
+  
+      <!-- Progress Column -->
+      <ng-container matColumnDef="doi">
+        <th mat-header-cell *matHeaderCellDef clas="doiTD"> Doi </th>
+        <td mat-cell *matCellDef="let row" clas="doiTD"><a [href]="row.doi" class='doiUrl' target="_blank"> <fa-icon [icon]="['fas', 'newspaper']"></fa-icon> </a></td>
+      </ng-container>
+  
+      <!-- Name Column -->
+      <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Title </th>
+        <td mat-cell *matCellDef="let row"> {{row.title}} </td>
+      </ng-container>
+  
+      <!-- Fruit Column -->
+      <ng-container matColumnDef="keywords">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> keywords </th>
+        <td mat-cell *matCellDef="let row"> {{row.keywords}} </td>
+      </ng-container>
+  
+      <!-- Fruit Column -->
+      <ng-container matColumnDef="cluster">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> cluster </th>
+        <td mat-cell *matCellDef="let row"> {{row.cluster}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  
+      <!-- Row shown when there is no matching data. -->
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4">No data matching the filter "{{search.value}}"</td>
+      </tr>
+    </table>
+  
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+  </div>
+  
+  
