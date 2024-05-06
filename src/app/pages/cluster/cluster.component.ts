@@ -38,6 +38,10 @@ export class ClusterComponent implements OnInit {
 
   getImageUrl(): string {
     let id = this.cluster_id.toString().padStart(3, '0')
-    return `https://s3.lapig.iesa.ufg.br/public/bibiografia/pasture/${id}_keywords.png`
+    let path = this.type_source
+    if (path === 'medicine'){
+      path = 'med'
+    }
+    return `https://s3.lapig.iesa.ufg.br/public/bibiografia/${path}/${id}_keywords.png`
   }
 }

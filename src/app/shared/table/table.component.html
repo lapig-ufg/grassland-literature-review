@@ -5,10 +5,7 @@
 </mat-form-field>
   
   <div class="mat-elevation-z8">
-    {{loading}}
-    
-    <mat-progress-bar [hidden]="loading" mode="indeterminate"></mat-progress-bar>
-    
+
     <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)">
   
       <!-- ID Column -->
@@ -38,7 +35,7 @@
       <!-- Fruit Column -->
       <ng-container matColumnDef="cluster">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> cluster </th>
-        <td mat-cell *matCellDef="let row"> {{row.cluster}} </td>
+        <td mat-cell *matCellDef="let row"> {{row.ismed_first? 'Medicine': 'Pasture'}} {{row.cluster}} </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
