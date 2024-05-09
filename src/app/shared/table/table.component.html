@@ -3,14 +3,18 @@
     <input matInput  placeholder="Pasture" #search>
     <button mat-raised-button color="primary" (click)="applyFilter(search.value)">Pesquisa</button>
 </mat-form-field>
-  
-  <div class="mat-elevation-z8">
-
-    <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)">
+<div class="mat-elevation-z8">
+  <app-scroll-container [more]="hasMore()"
+  [scrollOffset]="2500"
+  [scrollDelay]="3000"
+  (scrolled)="handleScroll($event)"
+  [class.full]="full"
+  [class.part]="!full">
+    <mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)">
   
       <!-- ID Column -->
       <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+        <th mat-header-cell *matHeaderCellDef > ID </th>
         <td mat-cell *matCellDef="let row"> <button mat-button (click)="openDialog(row.id)">Open</button></td>
       </ng-container>
   
@@ -34,20 +38,46 @@
   
       <!-- Fruit Column -->
       <ng-container matColumnDef="cluster">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> cluster </th>
+        <th mat-header-cell *matHeaderCellDef > cluster </th>
         <td mat-cell *matCellDef="let row"> {{row.ismed_first? 'Medicine': 'Pasture'}} {{row.cluster}} </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   
+      
+      <!-- Fruit Column -->
+      <ng-container matColumnDef="cited_by_count">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> cited by count </th>
+        <td mat-cell *matCellDef="let row"> {{row.cited_by_count}} </td>
+      </ng-container>
+
+      <!-- Fruit Column -->
+      <ng-container matColumnDef="publication_date">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> publication date </th>
+        <td mat-cell *matCellDef="let row"> {{row.publication_date}} </td>
+      </ng-container>
+
+      <!-- Fruit Column -->
+      <ng-container matColumnDef="referenced_works_count">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> referenced works count </th>
+        <td mat-cell *matCellDef="let row"> {{row.referenced_works_count}} </td>
+      </ng-container>
+
+      <!-- Fruit Column -->
+      <ng-container matColumnDef="relevance_score">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> relevance score </th>
+        <td mat-cell *matCellDef="let row"> {{row.relevance_score}} </td>
+      </ng-container>
+
+
+
       <!-- Row shown when there is no matching data. -->
       <tr class="mat-row" *matNoDataRow>
         <td class="mat-cell" colspan="4">No data matching the filter "{{search.value}}"</td>
       </tr>
-    </table>
-  
-    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+    </mat-table>
+  </app-scroll-container>
   </div>
   
   

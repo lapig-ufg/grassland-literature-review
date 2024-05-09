@@ -1,7 +1,11 @@
 <mat-toolbar>
     <section>
-    <button mat-raised-button color="primary"><a href="/"> Table</a></button>
-    <button mat-raised-button color="primary"><a href="/pasture"> Cluster Patagem</a></button>
-    <button mat-raised-button color="primary"><a href="/medicine"> Cluster Medicine</a></button>
+    <button mat-raised-button color="primary"><a [routerLink]="['/']"> Table</a></button>
+    <button mat-raised-button color="primary"><a [routerLink]="['/pasture']"> Cluster Patagem</a></button>
+    <button mat-raised-button color="primary"><a [routerLink]="['/medicine']"> Cluster Medicine</a></button>
+
+    </section>
+    <section>
+        Total: {{statisSource.total}}
     </section>
 </mat-toolbar>

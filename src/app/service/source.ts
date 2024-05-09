@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { SmallSource, Source, SortOptions } from '../interface/source'
+import { SmallSource, Source,StatusSource, SortOptions } from '../interface/source'
 
 
 @Injectable({
@@ -28,6 +28,21 @@ export class SourceService {
     return this.http.get<SmallSource[]>(`https://download.lapig.iesa.ufg.br/api/bibio/works/list/${typeSource}`, { params: params });
   }
 
+  getTotal(typeSource: string, search?: string, cluster?: number, sortState?: SortOptions): Observable<StatusSource> {
+    let params: any = { type_source: typeSource, page: 0 };
+    if (search) {
+      params.search = search;
+    }
+    if (cluster !== undefined) {
+      params.cluster = cluster;
+    }
+    if (sortState !== undefined) {
+      params.sort_active = sortState.active;
+      params.sort_direction = sortState.direction
+    }
+    // Faz a solicitação GET com os parâmetros de consulta
+    return this.http.get<StatusSource>(`https://download.lapig.iesa.ufg.br/api/bibio/works/list/${typeSource}`, { params: params });
+  }
   getSource(sourceId: string): Observable<Source> {
     
     return this.http.get<Source>(`https://download.lapig.iesa.ufg.br/api/bibio/works/id/${sourceId}`);

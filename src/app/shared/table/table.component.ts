@@ -1,10 +1,9 @@
-import {AfterViewInit, Component, ViewChild, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
+import {AfterViewInit, Component, ViewChild, Input, OnChanges, SimpleChanges, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {MatSort, Sort,MatSortModule} from '@angular/material/sort';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
-import {SmallSource, SortOptions } from '../../interface/source';
+import {SmallSource, SortOptions, StatusSource } from '../../interface/source';
 import { SourceService } from '../../service/source';
 import { Source } from '../../interface/source';
 import {LiveAnnouncer} from '@angular/cdk/a11y';
@@ -12,6 +11,7 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { MatDialog, MatDialogModule} from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';
 import { DialogSourceComponent }  from '../dialog-source/dialog-source.component';
+import { noop as _noop } from 'lodash-es';
 
 import {
   FontAwesomeModule,
@@ -20,6 +20,7 @@ import {
 import {
   faNewspaper,
 } from '@fortawesome/free-solid-svg-icons';
+import { StatusSourceService } from '../../service/status-source';
 
 
 /**
@@ -31,15 +32,23 @@ import {
   styleUrl: './table.component.scss',
   standalone: true,
   imports: [MatFormFieldModule, MatInputModule, MatTableModule, 
-    MatSortModule, MatPaginatorModule, FontAwesomeModule, 
+    MatSortModule, FontAwesomeModule, 
     MatProgressBarModule, MatDialogModule, MatButtonModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class TableComponent implements AfterViewInit,  OnChanges{
-  displayedColumns: string[] = ['id', 'doi', 'title', 'keywords', 'cluster'];
+  displayedColumns: string[] = [
+    'id', 'doi', 'title', 'keywords', 
+    'cluster', 'cited_by_count', 'publication_date',
+    'referenced_works_count', 'relevance_score'
+  ];
   dataSource!: MatTableDataSource<SmallSource>;
   source!: Source;
-
-  @ViewChild(MatPaginator) paginator!: MatPaginator;  
+  status_sources!: StatusSource
+  page: number = 1;
+  limit: number = 1000;
+  full: boolean = true;
+  
   @ViewChild(MatSort) sort!: MatSort;
   
   @Input() type_source: string = 'all';
@@ -47,18 +56,22 @@ export class TableComponent implements AfterViewInit,  OnChanges{
 
   private search!: string;
   private sortState!: SortOptions
-  public loading:boolean = true
+
   
 
   constructor(
     public dialog: MatDialog,
     private sourceService: SourceService, 
+    private statusSourceService: StatusSourceService,
     library: FaIconLibrary,
     private _liveAnnouncer: LiveAnnouncer) {
     library.addIcons(faNewspaper);
     
   }
 
+  ngOnInit() {
+    this.getData([])  
+  }
   ngAfterViewInit() {
     this.getSourcesData(1);
     
@@ -70,10 +83,6 @@ export class TableComponent implements AfterViewInit,  OnChanges{
     this.search = searchFilter
     this.getSourcesData(1);
     this.dataSource.filter = searchFilter.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
   }
 
   announceSortChange(sortState: Sort) {
@@ -93,8 +102,38 @@ export class TableComponent implements AfterViewInit,  OnChanges{
   }
 
 
+  clearSources(){
+    this.dataSource = new MatTableDataSource();
+    this.dataSource.sort = this.sort;
+    
+  }
+
+  handleScroll = (event: Event) => {
+    console.log('scroll', event)
+    //scrolled = event.scrolled
+    console.timeEnd('lastScrolled');
+    //scrolled ? this.getSourcesData(this.page +1 ) : _noop();
+    console.time('lastScrolled');
+  }
+  hasMore(){
+    console.log(this.dataSource.data.length)
+    return !this.dataSource || this.dataSource.data.length < this.limit;
+  } 
+
+  getData(dataNew: SmallSource[]) {
+    const data: any = this.dataSource
+      ? [...this.dataSource.data, ...dataNew] 
+      : this.getSourcesData(1);
+    this.dataSource = new MatTableDataSource(data);
+    this.dataSource.sort = this.sort;
+  }
+
   getSourcesData(page:number) {
-    this.loading = true;
+    this.page = page;
+    if (page === 1) {
+      this.getTotal()
+    }
+    this.clearSources()
     this.sourceService.getSources(
       this.type_source, 
       page,this.search,
@@ -102,18 +141,35 @@ export class TableComponent implements AfterViewInit,  OnChanges{
       this.sortState
     ).subscribe(
       (data) => {
-        this.dataSource = new MatTableDataSource(data);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-        this.loading = false
+        this.getData(data);
+        
       },
       (error) => {
         console.error('Erro ao obter dados da fonte:', error);
-        this.loading = false
+        
       }
     );
   }
 
+  getTotal() {
+    
+    this.clearSources()
+    this.sourceService.getTotal(
+      this.type_source, 
+      this.search,
+      this.cluster,
+      this.sortState
+    ).subscribe(
+      (data) => {
+        this.statusSourceService.setStatus(data) 
+        this.limit = data.total
+      },
+      (error) => {
+        console.error('Erro ao obter dados da fonte:', error);
+        
+      }
+    );
+  }
   openDialog(sourceID: string) {
     this.sourceService.getSource(sourceID).subscribe(
       (data) => {
@@ -135,7 +191,7 @@ export class TableComponent implements AfterViewInit,  OnChanges{
     
   }
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['cluster']) {
+    if (changes['cluster'] || changes['type_source']) {
       this.getSourcesData(1)
     }
   }

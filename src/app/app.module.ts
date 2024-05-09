@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeadComponent } from './shared/head/head.component';
 import { TableComponent } from './shared/table/table.component';
+import { ScrollContainerComponent } from './shared/scroll-container/scroll-container.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import {MatButtonModule} from '@angular/material/button';
@@ -17,6 +18,7 @@ import {MatIconModule} from '@angular/material/icon';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ClusterComponent } from './pages/cluster/cluster.component';
+
 //import { DialogSourceComponent } from './shared/dialog-source/dialog-source.component';
 
 
@@ -26,6 +28,7 @@ import { ClusterComponent } from './pages/cluster/cluster.component';
     AppComponent,
     HeadComponent,
     HomeComponent,
+    
     ClusterComponent,
     
   ],
@@ -34,6 +37,7 @@ import { ClusterComponent } from './pages/cluster/cluster.component';
     BrowserModule,
     AppRoutingModule,
     TableComponent,
+    ScrollContainerComponent,
     MatToolbarModule,
     MatButtonModule,
     MatTableModule,
