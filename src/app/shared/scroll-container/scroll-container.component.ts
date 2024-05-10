@@ -39,7 +39,7 @@ export class ScrollContainerComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: any) {
-    console.log(changes)
+    
     if (changes.scrollDelay) this.setThrottle();
   }
 

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import { TableServices } from '../../service/table.service';
 
 
 
@@ -11,11 +12,13 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 export class ClusterComponent implements OnInit {
   type_source!: string;
   cluster_id: number = 0;
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute,
+    private tableService: TableServices,) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.type_source = params.get('type_source')!;
+      this.tableService.setInfo(this.type_source, this.cluster_id)
     });
   }
   setCluster(direction: boolean): void {
@@ -33,6 +36,7 @@ export class ClusterComponent implements OnInit {
         this.cluster_id = this.cluster_id -1
       }
     }
+    this.tableService.setInfo(this.type_source, this.cluster_id)
 
   }
 

@@ -14,6 +14,18 @@ import {MatTableModule} from '@angular/material/table';
 import {CdkTableModule} from '@angular/cdk/table';
 import { HttpClientModule } from '@angular/common/http';
 import {MatIconModule} from '@angular/material/icon';
+import { ImageModule } from 'primeng/image';
+import { InputGroupModule } from 'primeng/inputgroup';
+import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
+import { ButtonModule } from 'primeng/button';
+import { MenubarModule } from 'primeng/menubar';
+
+import { BadgeModule } from 'primeng/badge';
+import { AvatarModule } from 'primeng/avatar';
+import { InputTextModule } from 'primeng/inputtext';
+import { CommonModule } from '@angular/common';
+import { RippleModule } from 'primeng/ripple';
+import { DialogModule } from 'primeng/dialog';
 
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -33,6 +45,11 @@ import { ClusterComponent } from './pages/cluster/cluster.component';
     
   ],
   imports: [
+    DialogModule,
+    MenubarModule, BadgeModule, AvatarModule, InputTextModule, RippleModule, CommonModule,
+    ButtonModule,
+    ImageModule,
+    MenubarModule,
     MatIconModule,
     BrowserModule,
     AppRoutingModule,
@@ -43,7 +60,9 @@ import { ClusterComponent } from './pages/cluster/cluster.component';
     MatTableModule,
     CdkTableModule,
     HttpClientModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    InputGroupAddonModule,
+    InputGroupModule
   ],
   providers: [
     provideAnimationsAsync()

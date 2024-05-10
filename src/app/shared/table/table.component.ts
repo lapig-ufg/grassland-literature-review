@@ -1,113 +1,102 @@
-import {AfterViewInit, Component, ViewChild, Input, OnChanges, SimpleChanges, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import {MatSort, Sort,MatSortModule} from '@angular/material/sort';
-import {MatTableDataSource, MatTableModule} from '@angular/material/table';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {SmallSource, SortOptions, StatusSource } from '../../interface/source';
+import { AfterViewInit, Component, ViewChild, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { SmallSource, StatusSource } from '../../interface/source';
 import { SourceService } from '../../service/source';
 import { Source } from '../../interface/source';
-import {LiveAnnouncer} from '@angular/cdk/a11y';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
-import { MatDialog, MatDialogModule} from '@angular/material/dialog';
-import {MatButtonModule} from '@angular/material/button';
-import { DialogSourceComponent }  from '../dialog-source/dialog-source.component';
-import { noop as _noop } from 'lodash-es';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+
+import { DialogSourceComponent } from '../dialog-source/dialog-source.component';
+import { TableServices } from '../../service/table.service';
+
+import { TableModule } from 'primeng/table';
+import { CommonModule } from '@angular/common';
+import { Table } from 'primeng/table';
+import { SortEvent } from 'primeng/api';
+
 
 import {
   FontAwesomeModule,
-  FaIconLibrary,
+  FaIconLibrary
 } from '@fortawesome/angular-fontawesome';
-import {
-  faNewspaper,
-} from '@fortawesome/free-solid-svg-icons';
-import { StatusSourceService } from '../../service/status-source';
+import { faNewspaper } from '@fortawesome/free-solid-svg-icons';
 
-
-/**
- * @title Data table with sorting, pagination, and filtering.
- */
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss',
   standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, MatTableModule, 
-    MatSortModule, FontAwesomeModule, 
-    MatProgressBarModule, MatDialogModule, MatButtonModule],
+  imports: [FontAwesomeModule, MatDialogModule, TableModule, CommonModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class TableComponent implements AfterViewInit,  OnChanges{
-  displayedColumns: string[] = [
-    'id', 'doi', 'title', 'keywords', 
-    'cluster', 'cited_by_count', 'publication_date',
-    'referenced_works_count', 'relevance_score'
-  ];
-  dataSource!: MatTableDataSource<SmallSource>;
+export class TableComponent implements AfterViewInit {
+  
   source!: Source;
-  status_sources!: StatusSource
+  search!: string | undefined
+  status_sources!: StatusSource;
   page: number = 1;
   limit: number = 1000;
   full: boolean = true;
-  
-  @ViewChild(MatSort) sort!: MatSort;
-  
-  @Input() type_source: string = 'all';
-  @Input() cluster!: number;
+  isSorted: boolean | null= false;
 
-  private search!: string;
-  private sortState!: SortOptions
+  @ViewChild('dt') dt!: Table;
 
   
+
+  public dataSource: Array<SmallSource> = [];
 
   constructor(
     public dialog: MatDialog,
-    private sourceService: SourceService, 
-    private statusSourceService: StatusSourceService,
-    library: FaIconLibrary,
-    private _liveAnnouncer: LiveAnnouncer) {
+    private sourceService: SourceService,
+    private tableService: TableServices,
+    library: FaIconLibrary) {
     library.addIcons(faNewspaper);
-    
+
   }
 
   ngOnInit() {
-    this.getData([])  
-  }
-  ngAfterViewInit() {
-    this.getSourcesData(1);
+    
+    this.tableService.table$.subscribe((table) => {
+      this.dataSource = []
+      this.dataSource = table;
+    });
+
+    this.tableService.search$.subscribe((search) => {
+      this.search = search;
+    });
     
   }
 
-  applyFilter(searchFilter: string) {
-    
-    console.log(searchFilter)
-    this.search = searchFilter
-    this.getSourcesData(1);
-    this.dataSource.filter = searchFilter.trim().toLowerCase();
-  }
+  announceSortChange2(event: SortEvent): void {
 
-  announceSortChange(sortState: Sort) {
-    // This example uses English messages. If your application supports
-    // multiple language, you would internationalize these strings.
-    // Furthermore, you can customize the message to add additional
-    // details about the values being sorted.
-    
-    this.sortState = sortState
-    this.getSourcesData(1);
-    if (sortState.direction) {
-      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
-    } else {
-      this._liveAnnouncer.announce('Sorting cleared');
+    let sorteData =  {
+      active: event.field,
+      direction: event.order === 1 ? 'asc' : 'desc'
     }
-
+    if (this.isSorted == null || this.isSorted === undefined) {
+      this.isSorted = true;
+      this.tableService.announceSortChange(sorteData) ;
+  } else if (this.isSorted == true) {
+      this.isSorted = false;
+      
+  } else if (this.isSorted == false) {
+      this.isSorted = null;
+      this.dataSource = [];
+      
   }
-
-
-  clearSources(){
-    this.dataSource = new MatTableDataSource();
-    this.dataSource.sort = this.sort;
+    console.log(event.data = []);
     
+   }
+
+
+  applyFilter(filter: string): void {
+    this.tableService.applyFilter(filter)
   }
 
+  ngAfterViewInit() {
+    this.tableService.getSourcesData(1)
+  }
+
+ 
+ 
   handleScroll = (event: Event) => {
     console.log('scroll', event)
     //scrolled = event.scrolled
@@ -116,66 +105,15 @@ export class TableComponent implements AfterViewInit,  OnChanges{
     console.time('lastScrolled');
   }
   hasMore(){
-    console.log(this.dataSource.data.length)
-    return !this.dataSource || this.dataSource.data.length < this.limit;
+    console.log(this.dataSource.length)
+    return !this.dataSource || this.dataSource.length < this.limit;
   } 
-
-  getData(dataNew: SmallSource[]) {
-    const data: any = this.dataSource
-      ? [...this.dataSource.data, ...dataNew] 
-      : this.getSourcesData(1);
-    this.dataSource = new MatTableDataSource(data);
-    this.dataSource.sort = this.sort;
-  }
-
-  getSourcesData(page:number) {
-    this.page = page;
-    if (page === 1) {
-      this.getTotal()
-    }
-    this.clearSources()
-    this.sourceService.getSources(
-      this.type_source, 
-      page,this.search,
-      this.cluster,
-      this.sortState
-    ).subscribe(
-      (data) => {
-        this.getData(data);
-        
-      },
-      (error) => {
-        console.error('Erro ao obter dados da fonte:', error);
-        
-      }
-    );
-  }
-
-  getTotal() {
-    
-    this.clearSources()
-    this.sourceService.getTotal(
-      this.type_source, 
-      this.search,
-      this.cluster,
-      this.sortState
-    ).subscribe(
-      (data) => {
-        this.statusSourceService.setStatus(data) 
-        this.limit = data.total
-      },
-      (error) => {
-        console.error('Erro ao obter dados da fonte:', error);
-        
-      }
-    );
-  }
   openDialog(sourceID: string) {
     this.sourceService.getSource(sourceID).subscribe(
       (data) => {
-        this.source =  data;
+        this.source = data;
         const dialogRef = this.dialog.open(DialogSourceComponent, {
-          data: data
+          data: {source:data, visible:true}
         });
 
         dialogRef.afterClosed().subscribe(result => {
@@ -184,17 +122,12 @@ export class TableComponent implements AfterViewInit,  OnChanges{
       },
       (error) => {
         console.error('Erro ao obter dados da fonte:', error);
-        
+
       }
     );
 
-    
+
   }
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['cluster'] || changes['type_source']) {
-      this.getSourcesData(1)
-    }
-  }
+  
 
 }
-
