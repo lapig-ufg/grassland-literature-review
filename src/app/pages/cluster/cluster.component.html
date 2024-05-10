@@ -1,13 +1,22 @@
-<div >
-    <div class="box" >
-        <button (click)="setCluster(false)" mat-fab color="accent" aria-label="Example icon button with a bookmark icon">
-            <mat-icon>skip_previous</mat-icon>
-          </button>
-        <img [src]="getImageUrl()">
-        <button (click)="setCluster(true)" mat-fab color="accent" aria-label="Example icon button with a bookmark icon">
-            <mat-icon>skip_next</mat-icon>
-          </button>
+<div class="grid">
+  <div class="col-2">
+    <div class="grid">
+      <div class="col-12">
+      <p-button (click)="setCluster(false)" class="" >
+        <mat-icon>skip_previous</mat-icon>
+      </p-button>
+      <p-button (click)="setCluster(true)" >
+        <mat-icon>skip_next</mat-icon>
+      </p-button>
+      </div>
     </div>
-    {{ cluster_id}}
-    <app-table [type_source]="type_source" [cluster]="cluster_id"></app-table>
+    <div class="flex justify-content-center flex-wrap">
+      <div class="flex align-items-center justify-content-center ">
+        <p-image [src]="getImageUrl()" [alt]="'Cluster_' +  cluster_id" width="256px" [preview]="true" />
+      </div>
+    </div>
+  </div>
+  <div class="col-10">
+    <app-table></app-table>
+  </div>
 </div>
