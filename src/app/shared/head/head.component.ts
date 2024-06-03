@@ -1,19 +1,19 @@
 import { Component, OnInit  } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { StatusSourceService } from '../../service/status-source';
-import { StatusSource } from '../../interface/source';
 import { TableServices } from '../../service/table.service';
 
 @Component({
-  selector: 'app-head',
-  templateUrl: './head.component.html',
-  styleUrl: './head.component.scss',
+    selector: 'app-head',
+    templateUrl: './head.component.html',
+    styleUrl: './head.component.scss',
+    standalone: true
 })
 export class HeadComponent implements OnInit {
-  statisSource!: StatusSource;
+  statisSource!;
   items!: MenuItem[];
 
-  constructor(private statusSource: StatusSourceService, 
+  constructor(private statusSource: StatusSourceService,
     private tableService: TableServices) {}
 
   ngOnInit() {
@@ -41,7 +41,6 @@ export class HeadComponent implements OnInit {
   }
 
   public applyFilter(query: string): void {
-    console.log("CLiquei no botão")
     this.tableService.applyFilter(query);
   }
 }

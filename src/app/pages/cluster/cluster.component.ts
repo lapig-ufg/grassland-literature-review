@@ -1,13 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { TableServices } from '../../service/table.service';
-
-
+import {ButtonModule} from "primeng/button";
+import {TableComponent} from "../../shared/table/table.component";
+import {ImageModule} from "primeng/image";
 
 @Component({
-  selector: 'app-cluster',
-  templateUrl: './cluster.component.html',
-  styleUrl: './cluster.component.scss',
+    selector: 'app-cluster',
+    templateUrl: './cluster.component.html',
+    styleUrl: './cluster.component.scss',
+    imports: [
+        ButtonModule,
+        TableComponent,
+        ImageModule
+    ],
+    standalone: true
 })
 export class ClusterComponent implements OnInit {
   type_source!: string;

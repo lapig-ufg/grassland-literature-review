@@ -1,47 +1,79 @@
-<p-table [value]="dataSource" (sortFunction)="announceSortChange2($event)" [customSort]="true"
-[scrollable]="true" scrollHeight="800px" >
-  <ng-template pTemplate="header">
-    <tr>
-      <th> </th>
-      <th> Doi</th>
-      <th pSortableColumn="title">
-        Title <p-sortIcon field="title" />
-      </th>
-      <th pSortableColumn="keywords">
-        keywords <p-sortIcon field="keywords" />
-      </th>
-      <th>Cluster
-      </th>
-      <th pSortableColumn="cited_by_count">
-        cited_by_count <p-sortIcon field="cited_by_count" />
-      </th>
-      <th pSortableColumn="publication">
-        publication <p-sortIcon field="publication" />
-      </th>
+<p-table #dt [value]="dataSource" (sortFunction)="announceSortChange2($event)" [customSort]="true"
+         [scrollable]="true" scrollHeight="800px">
+    <ng-template pTemplate="header">
+        <tr>
+            <th></th>
+            <th>Doi</th>
+            <th pSortableColumn="title">
+                Title
+                <p-sortIcon field="title"></p-sortIcon>
+            </th>
+            <th pSortableColumn="keywords">
+                Keywords
+                <p-sortIcon field="keywords"></p-sortIcon>
+            </th>
+            <th>Cluster</th>
+            <th pSortableColumn="cited_by_count">
+                Cited by Count
+                <p-sortIcon field="cited_by_count"></p-sortIcon>
+            </th>
+            <th pSortableColumn="publication">
+                Publication
+                <p-sortIcon field="publication"></p-sortIcon>
+            </th>
+            <th pSortableColumn="referenced_works_count">
+                Referenced Works Count
+                <p-sortIcon field="referenced_works_count"></p-sortIcon>
+            </th>
+            <th pSortableColumn="relevance_score">
+                Relevance Score
+                <p-sortIcon field="relevance_score"></p-sortIcon>
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-row>
+        <tr>
+            <td>
+                <p-button icon="pi pi-search" pTooltip="Open Abstract" severity="success" (onClick)="openDialog(row.id)" />
 
-      <th pSortableColumn="referenced_works_count">
-        referenced_works_count <p-sortIcon field="referenced_works_count" />
-      </th>
-
-      <th pSortableColumn="relevance_score">
-        relevance_score <p-sortIcon field="relevance_score" />
-      </th>
-    </tr>
-  </ng-template>
-  <ng-template pTemplate="body" let-row>
-    <tr>
-      <td > <button class="p-button-success" (click)="openDialog(row.id)" label="Open">Open</button></td>
-      <td>
-        <a *ngIf="row.doi" [href]="row.doi" class='doiUrl' target="_blank"> <fa-icon [icon]="['fas', 'newspaper']"></fa-icon> </a>
-      </td>
-      <td [innerHTML]="row.title"></td>
-      <td [innerHTML]="row.keywords"></td>
-      <td>{{row.ismed_first? 'Medicine': 'Pasture'}} {{row.cluster}} </td>
-      <td>{{ row.cited_by_count }}</td>
-      <td>{{ row.publication_date }}</td>
-      <td>{{ row.referenced_works_count }}</td>
-      <td>{{ row.relevance_score }}</td>
-
-    </tr>
-  </ng-template>
+            </td>
+            <td>
+                <p-button *ngIf="row.doi" icon="pi pi-book" pTooltip="Open Article" severity="warning" (onClick)="openDoi(row.doi)" />
+            </td>
+            <td [innerHTML]="row.title"></td>
+            <td [innerHTML]="row.keywords"></td>
+            <td>{{ row.ismed_first ? 'Medicine' : 'Pasture' }} {{ row.cluster }}</td>
+            <td>{{ row.cited_by_count }}</td>
+            <td>{{ row.publication_date }}</td>
+            <td>{{ row.referenced_works_count }}</td>
+            <td>{{ row.relevance_score }}</td>
+        </tr>
+    </ng-template>
 </p-table>
+<p-dialog
+    [modal]="true"
+    [(visible)]="showDialog"
+    [style]="{ width: '50rem' }"
+    [breakpoints]="{ '1250px': '75vw', '800px': '90vw' }">
+    <p-header [innerHTML]="source?.title">
+    </p-header>
+    <h3>ID: {{ source?.id }}</h3>
+    <p>
+        <a *ngIf="source?.doi" [href]="source?.doi" class='doiUrl' target="_blank">
+            <i class="pi pi-file"></i>
+        </a>
+        {{ source?.language }} | {{ source?.type_crossref }} |
+        {{ source?.ismed_first ? 'Medicine' : 'Pasture' }} Cluster:{{ source?.cluster }}
+    </p>
+    <h4>Keywords:</h4>
+    <p [innerHTML]="source?.keywords"></p>
+    <div class="grid">
+        <div class="col-3">
+            <p-image [src]="source?.image" width="100%" [preview]="true"></p-image>
+        </div>
+        <div class="col-9">
+            <h3>Abstract</h3>
+            <p [innerHTML]="source?.abstract"></p>
+        </div>
+    </div>
+</p-dialog>

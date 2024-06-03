@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { SmallSource, Source,StatusSource, SortOptions } from '../interface/source'
+import {SmallSource, SortOptions, Source, StatusSource} from "../shared/interface/source";
 
 
 @Injectable({
@@ -44,7 +44,7 @@ export class SourceService {
     return this.http.get<StatusSource>(`https://download.lapig.iesa.ufg.br/api/bibio/works/list/${typeSource}`, { params: params });
   }
   getSource(sourceId: string): Observable<Source> {
-    
+
     return this.http.get<Source>(`https://download.lapig.iesa.ufg.br/api/bibio/works/id/${sourceId}`);
   }
 }

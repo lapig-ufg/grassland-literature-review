@@ -1,7 +1,7 @@
 // shared-data.service.ts
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { StatusSource } from '../interface/source';
+import {StatusSource} from "../shared/interface/source";
 
 @Injectable({
   providedIn: 'root',

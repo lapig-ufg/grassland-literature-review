@@ -1,9 +1,9 @@
 import { Injectable, ViewChild } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { SmallSource, SortOptions, Source, StatusSource } from '../interface/source';
 
 import { SourceService } from './source';
 import { StatusSourceService } from './status-source';
+import {SmallSource, SortOptions, Source, StatusSource} from "../shared/interface/source";
 
 const INITIAL_PAGE = 1;
 
@@ -36,7 +36,7 @@ export class TableServices {
     public constructor(
         private sourceService: SourceService,
         private statusSourceService: StatusSourceService
-    
+
     ) { }
 
     setInfo(type_source: string, cluster?: number): void {
@@ -69,7 +69,7 @@ export class TableServices {
             this.sortState
         ).subscribe(
             (data: Array<SmallSource>) => {
-                
+
                 this.setData(data);
 
             },
@@ -98,7 +98,7 @@ export class TableServices {
         );
     }
 
-    public setData(dataNew: SmallSource[]): void {       
+    public setData(dataNew: SmallSource[]): void {
         this.table.next(dataNew);
     }
 
@@ -108,10 +108,10 @@ export class TableServices {
         // multiple language, you would internationalize these strings.
         // Furthermore, you can customize the message to add additional
         // details about the values being sorted.
-        
+
         this.sortState = sortState
         this.getSourcesData(1);
-        
-    
+
+
       }
 }

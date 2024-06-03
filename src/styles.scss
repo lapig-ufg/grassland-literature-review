@@ -1,4 +1,44 @@
-@import "primeicons/primeicons.css";
+/* You can add global styles to this file, and also import other style files */
+$gutter: 1rem; //for primeflex grid system
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/* Layout */
+@import "assets/layout/styles/layout/layout.scss";
+
+/* PrimeNG */
+@import "../node_modules/primeng/resources/primeng.min.css";
+@import "../node_modules/primeflex/primeflex.scss";
+@import "../node_modules/primeicons/primeicons.css";
+
+/* Quill Text Editor for p-editor */
+@import "../node_modules/quill/dist/quill.core.css";
+@import "../node_modules/quill/dist/quill.snow.css";
+
+/* Demos */
+@import "assets/demo/styles/flags/flags.css";
+@import "assets/demo/styles/badges.scss";
+@import "assets/demo/styles/code.scss";
+
+
+::-webkit-scrollbar {
+    width: 5px !important;
+    height: 5px !important;
+    transition: all 0.5s ease;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px #12835c;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    transition: all 0.5s ease;
+    background: lighten(#10b981, 10%);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: lighten(#10b981, 30%);
+    cursor: pointer !important;
+}
