@@ -8,15 +8,13 @@ node_modules
 .idea
 sassdoc
 
-src/assets/theme/*/*.css
-src/assets/layout/css/*.css
 src/assets/sass/theme/_vendor_extensions
 
 # compiled output
 /dist
 /tmp
 /out-tsc
-
+/site
 # dependencies
 /node_modules
 

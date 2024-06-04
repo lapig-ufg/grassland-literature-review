@@ -26,4 +26,4 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
 
-ng build --base-href "/lapig-cliente-bibiografia/" npx angular-cli-ghpages --dir=site/browser
+ng build --base-href "/lapig-cliente-bibiografia/" && mv dist/lapig-cliente-bibiografia/* site/browser/ && npx angular-cli-ghpages --dir=site/browser

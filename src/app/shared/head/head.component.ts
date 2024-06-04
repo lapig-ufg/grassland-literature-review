@@ -1,46 +1,63 @@
-import { Component, OnInit  } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { StatusSourceService } from '../../service/status-source';
 import { TableServices } from '../../service/table.service';
+import { InputGroupModule } from "primeng/inputgroup";
+import { BadgeModule } from "primeng/badge";
+import { MenubarModule } from "primeng/menubar";
+import { InputTextModule } from "primeng/inputtext";
+import { NgClass, NgIf } from "@angular/common";
+import { RippleModule } from "primeng/ripple";
+import {ButtonModule} from "primeng/button";
 
 @Component({
     selector: 'app-head',
     templateUrl: './head.component.html',
-    styleUrl: './head.component.scss',
+    styleUrls: ['./head.component.scss'],
+    imports: [
+        InputGroupModule,
+        BadgeModule,
+        MenubarModule,
+        InputTextModule,
+        NgClass,
+        RippleModule,
+        NgIf,
+        ButtonModule
+    ],
     standalone: true
 })
 export class HeadComponent implements OnInit {
-  statisSource!;
-  items!: MenuItem[];
+    statisSource: any;  // Explicitly declare the type of statisSource
+    items!: MenuItem[];
 
-  constructor(private statusSource: StatusSourceService,
-    private tableService: TableServices) {}
+    constructor(private statusSource: StatusSourceService,
+                private tableService: TableServices) {}
 
-  ngOnInit() {
-    this.statusSource.statusSource$.subscribe(dados => {
-      this.statisSource = dados;
-    });
-    this.items = [
-      {
-          label: 'Full',
-          icon: 'pi pi-table',
-          href:['/']
-      },
-      {
-          label: 'Cluster Pasture',
-          icon: 'pi pi-table',
-          href:['/pasture']
-      },
-      {
-        label: 'Cluster Medicine',
-        icon: 'pi pi-table',
-        href:['/medicine']
-    },
-  ];
+    ngOnInit() {
+        this.statusSource.statusSource$.subscribe(dados => {
+            this.statisSource = dados;
+        });
 
-  }
+        this.items = [
+            {
+                label: 'Full',
+                icon: 'pi pi-table',
+                routerLink: ['/']
+            },
+            {
+                label: 'Cluster Pasture',
+                icon: 'pi pi-table',
+                routerLink: ['/pasture']
+            },
+            {
+                label: 'Cluster Medicine',
+                icon: 'pi pi-table',
+                routerLink: ['/medicine']
+            },
+        ];
+    }
 
-  public applyFilter(query: string): void {
-    this.tableService.applyFilter(query);
-  }
+    public applyFilter(query: string): void {
+        this.tableService.applyFilter(query);
+    }
 }

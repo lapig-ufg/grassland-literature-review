@@ -10,13 +10,14 @@ import { DialogModule } from 'primeng/dialog';
 import { ImageModule } from 'primeng/image';
 import {ButtonModule} from "primeng/button";
 import {TooltipModule} from "primeng/tooltip";
+import {RouterOutlet} from "@angular/router";
 
 @Component({
     selector: 'app-table',
     templateUrl: './table.component.html',
     styleUrls: ['./table.component.scss'],
     standalone: true,
-    imports: [TableModule, CommonModule, DialogModule, ImageModule, ButtonModule, TooltipModule],
+    imports: [TableModule, CommonModule, DialogModule, ImageModule, ButtonModule, TooltipModule, RouterOutlet],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class TableComponent implements AfterViewInit {

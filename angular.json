@@ -3,7 +3,7 @@
     "version": 1,
     "newProjectRoot": "projects",
     "projects": {
-        "lapig-cliente-bibiografia": {
+        "gpw-literature": {
             "projectType": "application",
             "schematics": {
                 "@schematics/angular:component": {
@@ -17,7 +17,7 @@
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
-                        "outputPath": "dist/lapig-cliente-bibiografia",
+                        "outputPath": "dist/gpw-literature",
                         "index": "src/index.html",
                         "main": "src/main.ts",
                         "polyfills": [
@@ -68,10 +68,10 @@
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "configurations": {
                         "production": {
-                            "buildTarget": "lapig-cliente-bibiografia:build:production"
+                            "buildTarget": "gpw-literature:build:production"
                         },
                         "development": {
-                            "buildTarget": "lapig-cliente-bibiografia:build:development"
+                            "buildTarget": "gpw-literature:build:development"
                         }
                     },
                     "defaultConfiguration": "development"
@@ -79,7 +79,7 @@
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "buildTarget": "lapig-cliente-bibiografia:build"
+                        "buildTarget": "gpw-literature:build"
                     }
                 },
                 "test": {

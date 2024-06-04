@@ -11,18 +11,19 @@
             <i *ngIf="item.items" [ngClass]="['pi', root ? 'pi-angle-down ml-2' : 'pi-angle-right ml-auto']"></i>
         </a>
     </ng-template>
-    
+
     <ng-template pTemplate="end">
-        
-            
+
+
         <a class="flex align-items-center p-menuitem-link" p-menuitem-text>Total: {{statisSource.total}} </a>
-            
-        
+
+
         <div class="flex align-items-center gap-2">
             <p-inputGroup>
             <input type="text" pInputText placeholder="Search" class="w-8rem sm:w-auto"  #search/>
-            <button class="p-button-warning" (click)="applyFilter(search.value)"><span class="pi pi-search"></span></button>
+            <p-button (click)="applyFilter(search.value)"><span class="pi pi-search"></span></p-button>
         </p-inputGroup>
         </div>
     </ng-template>
 </p-menubar>
+
