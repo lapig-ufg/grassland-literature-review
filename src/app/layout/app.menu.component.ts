@@ -16,9 +16,9 @@ export class AppMenuComponent implements OnInit {
                 icon: 'pi pi-home',
                 items: [
                     {
-                        label: 'GPW Literature',
+                        label: 'Literature',
                         icon: 'pi pi-fw pi-book',
-                        routerLink: ['/']
+                        routerLink: ['/literature']
                     }
                 ]
             },
@@ -27,9 +27,9 @@ export class AppMenuComponent implements OnInit {
                 icon: 'pi pi-home',
                 items: [
                     {
-                        label: 'GPW Literature Cluster',
+                        label: 'Pasture Cluster',
                         icon: 'pi pi-fw pi-book',
-                        routerLink: ['/pasture']
+                        routerLink: ['/literature/cluster/pasture']
                     }
                 ]
             }

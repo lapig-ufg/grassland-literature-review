@@ -1,1 +1,7 @@
-
+.limited-width-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    width: 200px; /* Ajuste conforme necessário */
+}

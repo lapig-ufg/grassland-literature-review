@@ -7,10 +7,10 @@ import {ClusterComponent} from "../cluster/cluster.component";
     imports: [RouterModule.forChild([
         {
             path: '',
-            data: {breadcrumb: 'GPW Literature Review'},
+            data: {breadcrumb: 'Grassland Literature Review'},
             component: HomeComponent },
         {
-            path: ':type_source',
+            path: 'cluster/:type_source',
             data: {breadcrumb: 'Type Source'},
             component: ClusterComponent
         }

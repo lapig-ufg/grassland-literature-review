@@ -7,11 +7,10 @@ const routerOptions: ExtraOptions = {
 };
 
 const routes: Routes = [
+    { path: '', loadChildren: () => import('./pages/landing/landing.module').then(m => m.LandingModule) },
     {
-        path: '', component: AppLayoutComponent,
-        children: [
-            { path: '', loadChildren: () => import('./pages/home/home.module').then(m => m.HomeModule) },
-        ]
+        path: 'literature', component: AppLayoutComponent,
+        loadChildren: () => import('./pages/home/home.module').then(m => m.HomeModule)
     },
     { path: 'notfound', loadChildren: () => import('./shared/components/notfound/notfound.module').then(m => m.NotfoundModule) },
     { path: '**', redirectTo: '/notfound' }

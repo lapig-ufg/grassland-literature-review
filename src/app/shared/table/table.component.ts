@@ -26,6 +26,7 @@ export class TableComponent implements AfterViewInit {
     search: string | undefined;
     status_sources!: StatusSource;
     page: number = 1;
+    rows:number = 10;
     limit: number = 1000;
     full: boolean = true;
     isSorted: boolean | null = false;

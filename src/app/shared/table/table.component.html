@@ -1,6 +1,12 @@
-<app-head></app-head>
-<p-table #dt [value]="dataSource" (sortFunction)="announceSortChange2($event)" [customSort]="true"
-         [scrollable]="true" scrollHeight="800px">
+<p-table
+    #dt
+    [value]="dataSource"
+    [rows]="rows"
+    (sortFunction)="announceSortChange2($event)"
+    [customSort]="true"
+    [paginator]="true"
+    [rowsPerPageOptions]="[10, 20, 50, 60, 100, 200]"
+>
     <ng-template pTemplate="header">
         <tr>
             <th></th>
@@ -41,8 +47,8 @@
             <td>
                 <p-button *ngIf="row.doi" icon="pi pi-book" pTooltip="Open Article" severity="warning" (onClick)="openDoi(row.doi)" />
             </td>
-            <td [innerHTML]="row.title"></td>
-            <td [innerHTML]="row.keywords"></td>
+            <td pTooltip="{{row.title}}" [innerHTML]="row.title"></td>
+            <td class="limited-width-text" pTooltip="{{row.keywords}}" [innerHTML]="row.keywords"></td>
             <td>{{ row.ismed_first ? 'Medicine' : 'Pasture' }} {{ row.cluster }}</td>
             <td>{{ row.cited_by_count }}</td>
             <td>{{ row.publication_date }}</td>

@@ -1,18 +1,16 @@
 <div class="grid">
-  <div class="col-2">
-    <div class="grid">
-        <div class="col-12">
-            <p-button (click)="setCluster(false)" icon="pi pi-step-backward" class=""></p-button>
-            <p-button (click)="setCluster(true)" icon="pi pi-step-forward"></p-button>
+    <div class="col-3">
+        <div class="flex justify-content-center flex-wrap">
+            <div class="flex align-items-center justify-content-center ">
+                <p-image [src]="getImageUrl()" [alt]="'Cluster_' +  cluster_id" width="100%" [preview]="true"/>
+            </div>
+            <div class="flex justify-content-evenly w-full">
+                <p-button (click)="setCluster(false)" icon="pi pi-step-backward" [rounded]="true" [outlined]="true" />
+                <p-button (click)="setCluster(true)" icon="pi pi-step-forward" [rounded]="true" [outlined]="true" />
+            </div>
         </div>
     </div>
-    <div class="flex justify-content-center flex-wrap">
-      <div class="flex align-items-center justify-content-center ">
-        <p-image [src]="getImageUrl()" [alt]="'Cluster_' +  cluster_id" width="256px" [preview]="true" />
-      </div>
+    <div class="col-9">
+        <app-table></app-table>
     </div>
-  </div>
-  <div class="col-10">
-    <app-table></app-table>
-  </div>
 </div>

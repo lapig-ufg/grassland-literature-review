@@ -1,0 +1,38 @@
+.loading {
+    margin: auto;
+}
+
+.overlay {
+    position: fixed;
+    display: flex; /* Usando flexbox */
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(74, 74, 74, 0.4);
+    z-index: 99999;
+}
+
+svg {
+    z-index: 1000000 !important;
+    margin: 0 auto;
+}
+.img-loading {
+    width: 72px;
+    height: 70px;
+    animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 1;
+    }
+}

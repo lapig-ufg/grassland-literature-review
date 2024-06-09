@@ -46,7 +46,7 @@ export class LayoutService {
         colorScheme: 'light',
         theme: 'green',
         scale: 14,
-        menuTheme: 'transparent',
+        menuTheme: 'primaryColor',
     };
 
     config = signal<AppConfig>(this._config);
