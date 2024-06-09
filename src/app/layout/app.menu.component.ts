@@ -21,6 +21,17 @@ export class AppMenuComponent implements OnInit {
                         routerLink: ['/']
                     }
                 ]
+            },
+            {
+                label: 'Cluster',
+                icon: 'pi pi-home',
+                items: [
+                    {
+                        label: 'GPW Literature Cluster',
+                        icon: 'pi pi-fw pi-book',
+                        routerLink: ['/pasture']
+                    }
+                ]
             }
         ];
     }

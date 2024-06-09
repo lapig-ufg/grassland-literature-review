@@ -13,6 +13,6 @@ export class HomeComponent implements OnInit {
     constructor(private tableService: TableServices){}
 
     ngOnInit(): void {
-        this.tableService.setInfo( 'all')
+        this.tableService.setInfo( 'pasture')
     }
 }
