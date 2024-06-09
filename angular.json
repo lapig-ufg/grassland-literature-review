@@ -3,7 +3,7 @@
     "version": 1,
     "newProjectRoot": "projects",
     "projects": {
-        "gpw-literature": {
+        "grassland-literature-review": {
             "projectType": "application",
             "schematics": {
                 "@schematics/angular:component": {
@@ -17,7 +17,7 @@
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
-                        "outputPath": "dist/gpw-literature",
+                        "outputPath": "dist/grassland-literature-review",
                         "index": "src/index.html",
                         "main": "src/main.ts",
                         "polyfills": [
@@ -68,10 +68,10 @@
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "configurations": {
                         "production": {
-                            "buildTarget": "gpw-literature:build:production"
+                            "buildTarget": "grassland-literature-review:build:production"
                         },
                         "development": {
-                            "buildTarget": "gpw-literature:build:development"
+                            "buildTarget": "grassland-literature-review:build:development"
                         }
                     },
                     "defaultConfiguration": "development"
@@ -79,7 +79,7 @@
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "buildTarget": "gpw-literature:build"
+                        "buildTarget": "grassland-literature-review:build"
                     }
                 },
                 "test": {
