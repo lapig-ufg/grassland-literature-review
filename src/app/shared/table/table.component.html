@@ -1,3 +1,23 @@
+
+<div class="grid">
+   
+    <div class="col-12">
+        <div class="formgroup-inline">
+            <div class="field">
+                <label *ngIf="statisSource.total" >Total records: {{ statisSource.total }}</label>
+                <p-iconField iconPosition="left">
+                    <p-inputIcon styleClass="pi pi-search" />
+                    <input type="text" pInputText placeholder="Search" class="p-inputtext p-component p-element w-12rem sm:w-full"  #serach/>
+                    
+                </p-iconField>
+                
+            </div>
+            <div class="field">
+                <button pButton type="button" icon="pi pi-search" class="p-button-text p-button-secondary p-button-rounded flex-shrinkcog-0 mt-4" (click)="applyFilter(serach.value)"></button>
+            </div>
+        </div>
+    </div>
+</div>
 <p-table
     #dt
     [value]="dataSource"

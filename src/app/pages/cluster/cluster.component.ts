@@ -4,6 +4,9 @@ import { TableServices } from '../../service/table.service';
 import {ButtonModule} from "primeng/button";
 import {TableComponent} from "../../shared/table/table.component";
 import {ImageModule} from "primeng/image";
+import { TabViewModule } from 'primeng/tabview';
+
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-cluster',
@@ -12,7 +15,9 @@ import {ImageModule} from "primeng/image";
     imports: [
         ButtonModule,
         TableComponent,
-        ImageModule
+        ImageModule,
+        TabViewModule,
+        CommonModule
     ],
     standalone: true
 })

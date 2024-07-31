@@ -5,6 +5,9 @@ import {HomeComponent} from "./home.component";
 import {TableComponent} from "../../shared/table/table.component";
 import {CardModule} from "primeng/card";
 import {HeadComponent} from "../../shared/head/head.component";
+import { TabViewModule } from 'primeng/tabview';
+import {ImageModule} from "primeng/image";
+import {ButtonModule} from "primeng/button";
 
 @NgModule({
     imports: [
@@ -12,7 +15,11 @@ import {HeadComponent} from "../../shared/head/head.component";
         HomeRoutingModule,
         TableComponent,
         CardModule,
-        HeadComponent
+        HeadComponent,
+        TabViewModule,
+        ImageModule,
+        ButtonModule
+        
     ],
     declarations: [
         HomeComponent

@@ -12,6 +12,8 @@ import {ButtonModule} from "primeng/button";
 import {TooltipModule} from "primeng/tooltip";
 import {RouterOutlet} from "@angular/router";
 import {HeadComponent} from "../head/head.component";
+import { StatusSourceService } from '../../service/status-source';
+
 
 @Component({
     selector: 'app-table',
@@ -24,7 +26,6 @@ import {HeadComponent} from "../head/head.component";
 export class TableComponent implements AfterViewInit {
     source: Source | null = null;
     search: string | undefined;
-    status_sources!: StatusSource;
     page: number = 1;
     rows:number = 10;
     limit: number = 1000;
@@ -36,7 +37,10 @@ export class TableComponent implements AfterViewInit {
 
     public dataSource: any[] = [];
 
+    statisSource!: StatusSource;
+
     constructor(
+        private statusSource: StatusSourceService, 
         private sourceService: SourceService,
         private tableService: TableServices,
     ) {}
@@ -50,6 +54,9 @@ export class TableComponent implements AfterViewInit {
         this.tableService.search$.subscribe((search) => {
             this.search = search;
         });
+        this.statusSource.statusSource$.subscribe(dados => {
+            this.statisSource = dados;
+          });
     }
 
     announceSortChange2(event: SortEvent): void {

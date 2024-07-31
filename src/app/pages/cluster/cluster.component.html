@@ -1,16 +1,50 @@
-<div class="grid">
-    <div class="col-3">
-        <div class="flex justify-content-center flex-wrap">
-            <div class="flex align-items-center justify-content-center ">
-                <p-image [src]="getImageUrl()" [alt]="'Cluster_' +  cluster_id" width="100%" [preview]="true"/>
+
+<p-tabView>
+    <p-tabPanel header="Graphics">
+        
+        <div *ngFor="let data of ['1_evolucao_', '2_autores_', '3_instituicoes_', '4_keywords_']; " class="grid">
+            <div class="flex justify-content-start flex-wrap col-offset-2 col-8">
+                <div class="flex justify-content-evenly w-full">
+                    <p-image [src]="'https://s3.lapig.iesa.ufg.br/public/literatura/graficos/'+cluster_id+'/'+data+cluster_id+'.png'" [alt]="'Cluster_' +  cluster_id" width="100%" />
+                    
+                </div>
             </div>
-            <div class="flex justify-content-evenly w-full">
+            <div class="flex justify-content-evenly w-full" style="margin-bottom: 50px;">
                 <p-button (click)="setCluster(false)" icon="pi pi-step-backward" [rounded]="true" [outlined]="true" />
                 <p-button (click)="setCluster(true)" icon="pi pi-step-forward" [rounded]="true" [outlined]="true" />
             </div>
         </div>
-    </div>
-    <div class="col-9">
-        <app-table></app-table>
-    </div>
-</div>
+        <div class="grid">
+            <div class="flex justify-content-start flex-wrap col-offset-2 col-8">
+                <div class="flex justify-content-evenly w-full">
+                    <p-image [src]="getImageUrl()" [alt]="'Cluster_' +  cluster_id" width="100%" />
+                    
+                </div>
+            </div>
+            <div class="flex justify-content-evenly w-full" style="margin-bottom: 50px;">
+                <p-button (click)="setCluster(false)" icon="pi pi-step-backward" [rounded]="true" [outlined]="true" />
+                <p-button (click)="setCluster(true)" icon="pi pi-step-forward" [rounded]="true" [outlined]="true" />
+            </div>
+        </div>
+        
+        
+    </p-tabPanel>
+    <p-tabPanel header="DataBase">
+        <div class="grid">
+            <div class="col-3">
+                <div class="flex justify-content-center flex-wrap">
+                    <div class="flex align-items-center justify-content-center ">
+                        <p-image [src]="getImageUrl()" [alt]="'Cluster_' +  cluster_id" width="100%" [preview]="true"/>
+                    </div>
+                    <div class="flex justify-content-evenly w-full">
+                        <p-button (click)="setCluster(false)" icon="pi pi-step-backward" [rounded]="true" [outlined]="true" />
+                        <p-button (click)="setCluster(true)" icon="pi pi-step-forward" [rounded]="true" [outlined]="true" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-9">
+                <app-table></app-table>
+            </div>
+        </div>
+    </p-tabPanel> 
+</p-tabView>  
