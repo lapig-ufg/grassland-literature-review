@@ -6,21 +6,11 @@
 
         <app-breadcrumb class="topbar-breadcrumb"></app-breadcrumb>
     </div>
-    <div *ngIf="statisSource.total" class="flex align-items-center justify-content-center">
-        <h4>Total records: {{ statisSource.total | number }}</h4>
-    </div>
+    
 
     <div class="topbar-end">
         <ul class="topbar-menu">
-            <li class="topbar-search">
-                <span class="p-input-icon-left">
-                    <i class="pi pi-search"></i>
-                    <input type="text" pInputText placeholder="Search" class="w-12rem sm:w-full" #serach>
-                </span>
-            </li>
-            <li class="ml-3">
-                <button pButton type="button" icon="pi pi-search" class="p-button-text p-button-secondary p-button-rounded flex-shrinkcog-0" (click)="applyFilter(serach.value)"></button>
-            </li>
+           
 
         </ul>
     </div>
