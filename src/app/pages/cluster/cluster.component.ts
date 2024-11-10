@@ -7,6 +7,7 @@ import {ImageModule} from "primeng/image";
 import { TabViewModule } from 'primeng/tabview';
 
 import { CommonModule } from '@angular/common';
+import { environment } from './../../../environments/environment';
 
 @Component({
     selector: 'app-cluster',
@@ -22,15 +23,14 @@ import { CommonModule } from '@angular/common';
     standalone: true
 })
 export class ClusterComponent implements OnInit {
-  type_source!: string;
+  type_source: string = environment.typeSource;
   cluster_id: number = 0;
   constructor(private route: ActivatedRoute,
     private tableService: TableServices,) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params: ParamMap) => {
-      this.type_source = params.get('type_source')!;
-      this.tableService.setInfo(this.type_source, this.cluster_id)
+      this.tableService.setInfo(this.cluster_id)
     });
   }
   setCluster(direction: boolean): void {
@@ -48,16 +48,12 @@ export class ClusterComponent implements OnInit {
         this.cluster_id = this.cluster_id -1
       }
     }
-    this.tableService.setInfo(this.type_source, this.cluster_id)
+    this.tableService.setInfo(this.cluster_id)
 
   }
 
   getImageUrl(): string {
     let id = this.cluster_id.toString().padStart(3, '0')
-    let path = this.type_source
-    if (path === 'medicine'){
-      path = 'med'
-    }
-    return `https://s3.lapig.iesa.ufg.br/public/bibiografia/${path}/${id}_keywords.png`
+    return `https://s3.lapig.iesa.ufg.br/public/literatura/${this.type_source}/cluster/${id}_keywords.png`
   }
 }

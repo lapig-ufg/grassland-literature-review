@@ -4,6 +4,8 @@ import { BehaviorSubject } from 'rxjs';
 import { SourceService } from './source';
 import { StatusSourceService } from './status-source';
 import {SmallSource, SortOptions, Source, StatusSource} from "../shared/interface/source";
+import { environment } from './../../environments/environment';
+
 
 const INITIAL_PAGE = 1;
 
@@ -18,7 +20,7 @@ export class TableServices {
     search$ = this._search.asObservable();
     table$ = this.table.asObservable();
 
-    type_source: string = 'all'
+    type_source: string = environment.typeSource
     cluster!: number | undefined
 
 
@@ -39,8 +41,7 @@ export class TableServices {
 
     ) { }
 
-    setInfo(type_source: string, cluster?: number): void {
-        this.type_source = type_source
+    setInfo(cluster?: number): void {
         this.cluster = cluster;
         this.getSourcesData(INITIAL_PAGE);
     }
@@ -62,7 +63,6 @@ export class TableServices {
 
 
         this.sourceService.getSources(
-            this.type_source,
             pageIndex,
             this.search,
             this.cluster,
@@ -82,7 +82,6 @@ export class TableServices {
 
     public getTotal(): void {
         this.sourceService.getTotal(
-            this.type_source,
             this.search,
             this.cluster,
             this.sortState

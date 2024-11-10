@@ -10,7 +10,7 @@ import {ClusterComponent} from "../cluster/cluster.component";
             data: {breadcrumb: 'Grassland Literature Review'},
             component: HomeComponent },
         {
-            path: 'cluster/:type_source',
+            path: 'cluster',
             data: {breadcrumb: 'Type Source'},
             component: ClusterComponent
         }

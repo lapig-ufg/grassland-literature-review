@@ -38,23 +38,7 @@ export class HeadComponent implements OnInit {
             this.statisSource = dados;
         });
 
-        this.items = [
-            {
-                label: 'Full',
-                icon: 'pi pi-table',
-                routerLink: ['/']
-            },
-            {
-                label: 'Cluster Pasture',
-                icon: 'pi pi-table',
-                routerLink: ['/pasture']
-            },
-            {
-                label: 'Cluster Medicine',
-                icon: 'pi pi-table',
-                routerLink: ['/medicine']
-            },
-        ];
+       
     }
 
     public applyFilter(query: string): void {

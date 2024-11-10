@@ -29,7 +29,7 @@ export class AppMenuComponent implements OnInit {
                     {
                         label: 'Pasture Cluster',
                         icon: 'pi pi-fw pi-book',
-                        routerLink: ['/literature/cluster/pasture']
+                        routerLink: ['/literature/cluster']
                     }
                 ]
             }

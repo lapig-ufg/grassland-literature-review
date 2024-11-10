@@ -4,7 +4,7 @@
         <div *ngFor="let data of ['1_evolucao', '2_autores', '3_institu', '4_keywords_all']; " class="grid">
             <div class="flex justify-content-start flex-wrap col-offset-2 col-8">
                 <div class="flex justify-content-evenly w-full">
-                    <p-image [src]="'https://s3.lapig.iesa.ufg.br/public/literatura/graficos/all/'+data+'.png'" [alt]="data " width="100%" />
+                    <p-image [src]="'https://s3.lapig.iesa.ufg.br/public/literatura/'+type_source+'/graficos/all/'+data+'.png'" [alt]="data " width="100%" />
                     
                 </div>
             </div>
